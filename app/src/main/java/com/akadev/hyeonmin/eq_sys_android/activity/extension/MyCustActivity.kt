@@ -1,13 +1,14 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.extension
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.akadev.hyeonmin.eq_sys_android.util.Cache
+import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.Login
 
 
-open class MyCustActivity: Activity() {
+open class MyCustActivity: AppCompatActivity() {
 
     val ReqCd_RegisterActivity = 0
 
@@ -26,7 +27,7 @@ open class MyCustActivity: Activity() {
     fun alert(message: String) {
         AlertDialog.Builder(this)
                 .setTitle("오류")
-                .setMessage(message as String)
+                .setMessage(message)
                 .show()
     }
 
@@ -40,7 +41,8 @@ open class MyCustActivity: Activity() {
         }
     }
 
-    open fun loginResult(id: String, pw: String) {
+    open fun loginResult(id: String, pw: String, jwtToken: String) {
+        Singleton.loginResult(jwtToken)
         cache?.id = id
         cache?.pw = pw
     }

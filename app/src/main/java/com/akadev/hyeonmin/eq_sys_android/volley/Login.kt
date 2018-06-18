@@ -2,7 +2,6 @@ package com.akadev.hyeonmin.eq_sys_android.volley
 
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.MyCustActivity
 import com.akadev.hyeonmin.eq_sys_android.util.Const
-import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.extension.ErrorDialogListener
 import com.android.volley.Request
 import com.android.volley.Response
@@ -16,8 +15,7 @@ class Login(val activity: MyCustActivity) {
         val loginRequest: StringRequest = object: StringRequest(Request.Method.POST,
             Const.apiUrl + "member/passwordLogin",
             Response.Listener { response ->
-                Singleton.loginResult(response)
-                activity.loginResult(id, pw)
+                activity.loginResult(id, pw, response)
             },
                 ErrorDialogListener(activity)) {
 

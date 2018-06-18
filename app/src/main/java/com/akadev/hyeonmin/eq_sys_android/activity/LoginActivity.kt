@@ -43,9 +43,9 @@ class LoginActivity : MyCustActivity() {
         }
     }
 
-    override fun loginResult(id: String, pw: String) {
-        super.loginResult(id, pw)
-        startActivity(Intent(this, MainActivity::class.java))
+    override fun loginResult(id: String, pw: String, jwtToken: String) {
+        super.loginResult(id, pw, jwtToken)
+        startActivity(Intent(this, MapActivity::class.java))
     }
 
 }
