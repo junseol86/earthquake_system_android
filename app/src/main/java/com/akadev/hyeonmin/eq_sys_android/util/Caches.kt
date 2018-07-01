@@ -3,7 +3,7 @@ package com.akadev.hyeonmin.eq_sys_android.util
 import android.app.Activity
 import android.content.Context
 
-class Cache(activity: Activity) {
+class Caches(activity: Activity) {
     private val sf = activity.getSharedPreferences("account", Context.MODE_PRIVATE)!!
 
     var id: String

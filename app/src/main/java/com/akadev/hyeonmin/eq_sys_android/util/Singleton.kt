@@ -28,4 +28,8 @@ object Singleton {
         earthquakeInfo = ei
     }
 
+    var chatBefore = 0
+    var chatAfter = 0
+    var chatLastRead = 0
+
 }

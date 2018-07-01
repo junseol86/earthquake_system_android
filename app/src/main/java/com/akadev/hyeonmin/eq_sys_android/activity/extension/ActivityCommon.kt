@@ -1,31 +1,24 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.extension
 
+import android.app.Activity
 import android.app.AlertDialog
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.akadev.hyeonmin.eq_sys_android.util.Cache
+import com.akadev.hyeonmin.eq_sys_android.util.Caches
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.Login
 
 
-open class MyCustActivity: AppCompatActivity() {
+open class ActivityCommon(val atvt: Activity, val af: ACFuncs) {
 
     val ReqCd_RegisterActivity = 0
 
     val ResCd_Cancel = 100
     val ResCd_Success = 101
 
-    var cache: Cache? = null
-    var loginVly: Login? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        cache = Cache(this)
-        loginVly = Login(this)
-    }
+    var caches: Caches = Caches(atvt)
+    var loginVly: Login = Login(this)
 
     fun alert(message: String) {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(atvt)
                 .setTitle("오류")
                 .setMessage(message)
                 .show()
@@ -36,14 +29,15 @@ open class MyCustActivity: AppCompatActivity() {
     }
 
     fun loginWithCache() {
-        if (cache!!.id.isNotEmpty() && cache!!.pw.isNotEmpty()) {
-            login(cache!!.id, cache!!.pw)
+        if (caches!!.id.isNotEmpty() && caches!!.pw.isNotEmpty()) {
+            login(caches!!.id, caches!!.pw)
         }
     }
 
     open fun loginResult(id: String, pw: String, jwtToken: String) {
         Singleton.loginResult(jwtToken)
-        cache?.id = id
-        cache?.pw = pw
+        caches?.id = id
+        caches?.pw = pw
+        af.loginResult()
     }
 }

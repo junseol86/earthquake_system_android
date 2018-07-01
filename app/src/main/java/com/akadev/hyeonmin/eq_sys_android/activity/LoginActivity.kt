@@ -1,15 +1,18 @@
 package com.akadev.hyeonmin.eq_sys_android.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import com.akadev.hyeonmin.eq_sys_android.R
-import com.akadev.hyeonmin.eq_sys_android.activity.extension.MyCustActivity
-import com.akadev.hyeonmin.eq_sys_android.volley.Login
+import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.MainActivity
+import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
+import com.akadev.hyeonmin.eq_sys_android.activity.extension.ActivityCommon
 
-class LoginActivity : MyCustActivity() {
+class LoginActivityCommon: Activity() {
 
+    var ac: ActivityCommon? = null
 
     var etId: EditText? = null
     var etPw: EditText? = null
@@ -20,14 +23,20 @@ class LoginActivity : MyCustActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val thisActivity = this
+        ac = ActivityCommon(this, object:ACFuncs {
+            override fun loginResult() {
+                startActivity(Intent(thisActivity, MainActivity::class.java))
+            }
+        })
 
-        loginWithCache()
+        ac?.loginWithCache()
 
         etId = findViewById(R.id.et_id)
         etPw = findViewById(R.id.et_pw)
         btnLogin = findViewById(R.id.btn_login)
         btnLogin?.setOnClickListener { _ ->
-            login(etId!!.text.toString(), etPw!!.text.toString())
+            ac?.login(etId!!.text.toString(), etPw!!.text.toString())
         }
 
         btnRegister = findViewById(R.id.btn_register)
@@ -38,14 +47,9 @@ class LoginActivity : MyCustActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ReqCd_RegisterActivity && resultCode == ResCd_Success) {
-            loginWithCache()
+        if (requestCode == ac!!.ReqCd_RegisterActivity && resultCode == ac!!.ResCd_Success) {
+            ac?.loginWithCache()
         }
-    }
-
-    override fun loginResult(id: String, pw: String, jwtToken: String) {
-        super.loginResult(id, pw, jwtToken)
-        startActivity(Intent(this, MapActivity::class.java))
     }
 
 }

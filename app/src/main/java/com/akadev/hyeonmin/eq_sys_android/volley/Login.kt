@@ -1,6 +1,6 @@
 package com.akadev.hyeonmin.eq_sys_android.volley
 
-import com.akadev.hyeonmin.eq_sys_android.activity.extension.MyCustActivity
+import com.akadev.hyeonmin.eq_sys_android.activity.extension.ActivityCommon
 import com.akadev.hyeonmin.eq_sys_android.util.Const
 import com.akadev.hyeonmin.eq_sys_android.volley.extension.ErrorDialogListener
 import com.android.volley.Request
@@ -8,16 +8,16 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 
-class Login(val activity: MyCustActivity) {
-    private val queue = Volley.newRequestQueue(activity)!!
+class Login(val activityCommon: ActivityCommon) {
+    private val queue = Volley.newRequestQueue(activityCommon.atvt)!!
 
     fun login(id: String, pw: String) {
         val loginRequest: StringRequest = object: StringRequest(Request.Method.POST,
             Const.apiUrl + "member/passwordLogin",
             Response.Listener { response ->
-                activity.loginResult(id, pw, response)
+                activityCommon.loginResult(id, pw, response)
             },
-                ErrorDialogListener(activity)) {
+                ErrorDialogListener(activityCommon)) {
 
             override fun getBodyContentType(): String {
                 return "application/x-www-form-urlencoded; charset=UTF-8"
