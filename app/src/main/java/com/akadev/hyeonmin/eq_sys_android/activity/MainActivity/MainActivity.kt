@@ -64,6 +64,10 @@ class MainActivity : NMapActivity() {
     }
 
     override fun onBackPressed() {
+        if (chatMng!!.offChatIfOn()) {
+            return
+        }
+
         super.onBackPressed()
     }
 }
