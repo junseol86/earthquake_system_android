@@ -7,12 +7,12 @@ import android.view.View
 import android.widget.TextView
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.MainActivity
-import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.Chat
+import java.util.*
 
 class ChatManager(val activity: MainActivity) {
 
-    val chatVly = Chat(activity)
+    val chatVly = Chat(this)
 
     val mapCl: ConstraintLayout = activity.findViewById(R.id.map_cl)
     val chatCl: ConstraintLayout = activity.findViewById(R.id.chat_cl)
@@ -34,16 +34,31 @@ class ChatManager(val activity: MainActivity) {
         chatRv.layoutManager = LinearLayoutManager(activity)
         chatRv.adapter = chatAdt
 
-        chatVly.getList()
-
+        chatVly.getListBefore()
     }
 
-    fun chatGetListResult(chtList: List<Map<String, String>>) {
+    fun chatGetListBeforeResult(chtList: List<Map<String, String>>, scrollToBottom: Boolean) {
         if (chtList.isEmpty()) {
             return
         }
+        Collections.reverse(chtList)
+        chatList.addAll(0, chtList)
+
+        if (scrollToBottom) {
+            chatRv.scrollToPosition(chatList.size - 1)
+        }
+        chatTV?.text = chatList.last()["cht_text"]
+    }
+
+    fun chatGetListAfterResult(chtList: List<Map<String, String>>) {
+        if (chtList.isEmpty()) {
+            return
+        }
+        Collections.reverse(chtList)
         chatList.addAll(chtList)
-        chatTV?.text = chatList[0]["cht_text"]
+
+        chatRv.scrollToPosition(chatList.size - 1)
+        chatTV?.text = chatList.last()["cht_text"]
     }
 
     fun offChatIfOn(): Boolean {

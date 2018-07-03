@@ -8,7 +8,7 @@ import com.akadev.hyeonmin.eq_sys_android.R
 
 class ChatViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
     val chatItemCl: ConstraintLayout = itemView!!.findViewById(R.id.chat_item)
-    val chatFromTo: TextView = itemView!!.findViewById(R.id.chat_fromto)
-    val chatDateTime: TextView = itemView!!.findViewById(R.id.chat_datetime)
+    val chatHdrLeft: TextView = itemView!!.findViewById(R.id.chat_hdr_left)
+    val chatHdrRight: TextView = itemView!!.findViewById(R.id.chat_hdr_right)
     val chatText: TextView = itemView!!.findViewById(R.id.chat_text)
 }

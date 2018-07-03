@@ -9,7 +9,6 @@ import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.Earthquake
 import com.akadev.hyeonmin.eq_sys_android.volley.Structure
 import com.nhn.android.maps.NMapActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : NMapActivity() {

@@ -23,9 +23,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/chat_fromto"
+            android:id="@+id/chat_hdr_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:alpha="0.5"
             android:text="TextView"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,9 +34,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/chat_datetime"
+            android:id="@+id/chat_hdr_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:alpha="0.5"
             android:text="TextView"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
