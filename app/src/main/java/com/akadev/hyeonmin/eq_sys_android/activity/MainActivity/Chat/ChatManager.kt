@@ -4,6 +4,8 @@ import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.MainActivity
@@ -25,6 +27,9 @@ class ChatManager(val activity: MainActivity) {
 
     var chatTV: TextView = activity.findViewById(R.id.chat)
 
+    var chatTextET: EditText = activity.findViewById(R.id.chat_et)
+    var chatSendBtn: Button = activity.findViewById(R.id.chat_send)
+
     init {
         seeChatBtn.setOnClickListener {
             mapCl.visibility = View.GONE
@@ -33,6 +38,10 @@ class ChatManager(val activity: MainActivity) {
 
         chatRv.layoutManager = LinearLayoutManager(activity)
         chatRv.adapter = chatAdt
+
+        chatSendBtn.setOnClickListener {
+            chatVly.sendChat(chatTextET.text.toString())
+        }
 
         chatVly.getListBefore()
     }
@@ -47,7 +56,7 @@ class ChatManager(val activity: MainActivity) {
         if (scrollToBottom) {
             chatRv.scrollToPosition(chatList.size - 1)
         }
-        chatTV?.text = chatList.last()["cht_text"]
+        chatTV.text = chatList.last()["cht_text"]
     }
 
     fun chatGetListAfterResult(chtList: List<Map<String, String>>) {
@@ -58,7 +67,7 @@ class ChatManager(val activity: MainActivity) {
         chatList.addAll(chtList)
 
         chatRv.scrollToPosition(chatList.size - 1)
-        chatTV?.text = chatList.last()["cht_text"]
+        chatTV.text = chatList.last()["cht_text"]
     }
 
     fun offChatIfOn(): Boolean {
@@ -71,4 +80,8 @@ class ChatManager(val activity: MainActivity) {
         }
     }
 
+    fun sendChatResult() {
+        chatVly.getListAfter()
+        chatTextET.setText("")
+    }
 }

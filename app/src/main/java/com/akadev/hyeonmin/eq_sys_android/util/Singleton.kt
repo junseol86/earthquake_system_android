@@ -7,6 +7,7 @@ object Singleton {
     var jwtToken = ""
     var memberInfo: Map<String, String>? = null
     var earthquakeInfo: Map<String, String>? = null
+    var fcmRefreshed = false
 
     fun loginResult(jt: String) {
         jwtToken = jt
@@ -17,6 +18,11 @@ object Singleton {
             mi[key] = jo.get(key).toString()
         }
         memberInfo = mi
+    }
+
+    fun refreshJwtToken(response: String) {
+        val jo = JSONObject(response)
+        loginResult(jo["jwtToken"] as String)
     }
 
     fun earthquakeGetListResult(eqList: List<Map<String, String>>) {

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "773395747460",
+    "firebase_url": "https://earthquakesystem-8556e.firebaseio.com",
+    "project_id": "earthquakesystem-8556e",
+    "storage_bucket": "earthquakesystem-8556e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773395747460:android:d034557d2b78638e",
+        "android_client_info": {
+          "package_name": "com.akadev.hyeonmin.eq_sys_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773395747460-ds1e92oogngltd5gvdrdi9smf2vj6cfv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akadev.hyeonmin.eq_sys_android",
+            "certificate_hash": "9da29ec68f9f15e848e3a76c0a6a16151dd155a6"
+          }
+        },
+        {
+          "client_id": "773395747460-jeapopomb3kdlq1b7h2r73160trsnlj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPjdtJM72_oOzIwm7MFs5iClmrYN23xsU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773395747460-jeapopomb3kdlq1b7h2r73160trsnlj5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
