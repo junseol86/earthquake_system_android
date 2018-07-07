@@ -28,7 +28,7 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <activity android:name=".activity.LoginActivityCommon">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,9 +39,16 @@
         <activity android:name=".activity.MainActivity.MainActivity"></activity>
 
         <service
-            android:name=".service.InstIdService">
+            android:name=".firebase.InstIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".firebase.MessagingSergvice">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 

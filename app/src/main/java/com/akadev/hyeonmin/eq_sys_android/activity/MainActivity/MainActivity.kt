@@ -1,11 +1,16 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity
 
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.Chat.ChatManager
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ActivityCommon
+import com.akadev.hyeonmin.eq_sys_android.firebase.BrCstReceiver
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.Earthquake
 import com.akadev.hyeonmin.eq_sys_android.volley.FcmToken
@@ -45,6 +50,10 @@ class MainActivity : NMapActivity() {
         structureVly = Structure(this)
 
         chatMng = ChatManager(this)
+
+        val intFtr = IntentFilter()
+        intFtr.addAction("EqSystem")
+        registerReceiver(BrCstReceiver(), intFtr)
 
         nm = NaverMap(this)
     }
@@ -87,4 +96,20 @@ class MainActivity : NMapActivity() {
 
         super.onBackPressed()
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        Singleton.activityOn = true
+//        화면이 꺼지거나 했다가 다시 켜진 경우 대화 등을 최신으로
+        if (chatMng != null && !chatMng!!.chatList.isEmpty()) {
+            chatMng!!.chatVly.getListAfter()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Singleton.activityOn = false
+    }
+
 }

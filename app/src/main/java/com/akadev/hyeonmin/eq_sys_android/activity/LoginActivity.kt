@@ -10,7 +10,7 @@ import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.MainActivity
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ActivityCommon
 
-class LoginActivityCommon: Activity() {
+class LoginActivity: Activity() {
 
     var ac: ActivityCommon? = null
 

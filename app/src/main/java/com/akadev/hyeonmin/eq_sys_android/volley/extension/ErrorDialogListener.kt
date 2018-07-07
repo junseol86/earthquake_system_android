@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException
 
 class ErrorDialogListener(val activityCommon: ActivityCommon): Response.ErrorListener {
     override fun onErrorResponse(error: VolleyError?) {
-        if (error!!.networkResponse.data != null) {
+        if (error?.networkResponse != null && error.networkResponse.data != null) {
             try {
                 var body = String(error.networkResponse.data, Charsets.UTF_8)
                 activityCommon.alert(JSONObject(body)["result"] as String)

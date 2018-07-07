@@ -36,7 +36,6 @@ class ChatAdapter(val chats: ArrayList<Map<String, String>>): RecyclerView.Adapt
 
             val todayDate = nowCal.get(Calendar.YEAR).toString() + "-" + (nowCal.get(Calendar.MONTH) + 1) + "-" + nowCal.get(Calendar.DATE)
             var sentDate = sentCal.get(Calendar.YEAR).toString() + "-" + (sentCal.get(Calendar.MONTH) + 1) + "-" + sentCal.get(Calendar.DATE)
-            System.out.println("$todayDate $sentDate")
 
             if (todayDate == sentDate) {
                 sentDate = "오늘"
