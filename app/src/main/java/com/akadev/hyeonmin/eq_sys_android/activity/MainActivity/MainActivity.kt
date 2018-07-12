@@ -1,11 +1,13 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity
 
-import android.content.BroadcastReceiver
-import android.content.Intent
+import android.app.AlertDialog
 import android.content.IntentFilter
-import android.content.res.Configuration
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.Chat.ChatManager
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
@@ -14,10 +16,13 @@ import com.akadev.hyeonmin.eq_sys_android.firebase.BrCstReceiver
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.Earthquake
 import com.akadev.hyeonmin.eq_sys_android.volley.FcmToken
+import com.akadev.hyeonmin.eq_sys_android.volley.Member
 import com.akadev.hyeonmin.eq_sys_android.volley.Structure
 import com.google.firebase.iid.FirebaseInstanceId
 import com.nhn.android.maps.NMapActivity
 import java.util.*
+import java.util.jar.Manifest
+import kotlin.collections.ArrayList
 
 class MainActivity : NMapActivity() {
 
@@ -34,10 +39,14 @@ class MainActivity : NMapActivity() {
     var structureVly: Structure? = null
     var structures: ArrayList<Map<String, String>>? = null
 
+    var memberVly: Member? = null
+    var members: ArrayList<Map<String, String>>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ac = ActivityCommon(this, object: ACFuncs {})
+        ac?.askCallPermission()
 
         fcmTokenVly = FcmToken(this)
         fcmTokenSend()
@@ -48,6 +57,8 @@ class MainActivity : NMapActivity() {
 
         earthquakeVly = Earthquake(this)
         structureVly = Structure(this)
+        memberVly = Member(this)
+        memberGetList()
 
         chatMng = ChatManager(this)
 
@@ -78,6 +89,28 @@ class MainActivity : NMapActivity() {
         nm?.showStructures()
     }
 
+    fun memberGetList() {
+        memberVly?.getList()
+    }
+
+    fun memberGetListResult(mbr: ArrayList<Map<String, String>>) {
+        members = mbr
+        mbr.sortWith(Comparator { o1, o2 -> (o1!!["mbr_team"]!!.compareTo(o2!!["mbr_team"]!!)) })
+        var list1 = ArrayList<Map<String, String>>()
+        var list2 = ArrayList<Map<String, String>>()
+        mbr.map {
+            if (it["mbr_team"]!! == Singleton.memberInfo!!["mbr_team"]) {
+                list1.add(it)
+            } else {
+                list2.add(it)
+            }
+        }
+        members = ArrayList()
+        members?.addAll(list1)
+        members?.addAll(list2)
+    }
+
+
     fun fcmTokenSend() {
         var token = FirebaseInstanceId.getInstance().token
         if (token != null) {
@@ -94,7 +127,17 @@ class MainActivity : NMapActivity() {
             return
         }
 
-        super.onBackPressed()
+        AlertDialog.Builder(this)
+                .setTitle("경주 지진알림을 종료하시겠습니까?")
+                .setPositiveButton("확인") { _, _ ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        finishAndRemoveTask()
+                    } else {
+                        finish()
+                    }
+                }
+                .setNegativeButton("취소") { _, _ ->}
+                .show()
     }
 
     override fun onResume() {

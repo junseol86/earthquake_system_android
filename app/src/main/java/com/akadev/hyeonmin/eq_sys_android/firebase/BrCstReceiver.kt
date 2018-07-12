@@ -1,5 +1,6 @@
 package com.akadev.hyeonmin.eq_sys_android.firebase
 
+import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,13 @@ class BrCstReceiver: BroadcastReceiver() {
 
         if (type == "chat") {
             ma.chatMng!!.chatVly.getListAfter()
+
+        } else if (type == "team") {
+            ma.memberVly!!.getList()
+            AlertDialog.Builder(ma)
+                    .setTitle(title.toString())
+                    .setMessage(body.toString())
+                    .show()
         }
     }
 }

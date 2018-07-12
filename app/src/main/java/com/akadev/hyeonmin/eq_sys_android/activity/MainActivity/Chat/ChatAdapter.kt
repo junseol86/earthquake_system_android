@@ -34,14 +34,15 @@ class ChatAdapter(val chats: ArrayList<Map<String, String>>): RecyclerView.Adapt
             sentCal.time = dateTime
             val nowCal = Calendar.getInstance()
 
-            val todayDate = nowCal.get(Calendar.YEAR).toString() + "-" + (nowCal.get(Calendar.MONTH) + 1) + "-" + nowCal.get(Calendar.DATE)
-            var sentDate = sentCal.get(Calendar.YEAR).toString() + "-" + (sentCal.get(Calendar.MONTH) + 1) + "-" + sentCal.get(Calendar.DATE)
+            val todayDate = nowCal.get(Calendar.YEAR).toString() + "/" + (nowCal.get(Calendar.MONTH) + 1) + "/" + nowCal.get(Calendar.DATE)
+            var sentDate = sentCal.get(Calendar.YEAR).toString() + "/" + (sentCal.get(Calendar.MONTH) + 1) + "/" + sentCal.get(Calendar.DATE)
 
             if (todayDate == sentDate) {
                 sentDate = "오늘"
             }
 
-            sentDate += " " + sentCal.get(Calendar.HOUR).toString() + ":" + sentCal.get(Calendar.MINUTE) + "." + sentCal.get(Calendar.SECOND)
+            sentDate += " " + sentCal.get(Calendar.HOUR).toString() + ":" + sentCal.get(Calendar.MINUTE)
+//            + ":" + sentCal.get(Calendar.SECOND)
             sent = sentDate
 
         } catch (e: Exception) {
@@ -52,14 +53,24 @@ class ChatAdapter(val chats: ArrayList<Map<String, String>>): RecyclerView.Adapt
             holder.chatItemCl.setBackgroundColor(if (position % 2 == 0) Color.rgb(82, 137, 233) else Color.rgb(82, 124, 233))
             holder.chatText.gravity = Gravity.RIGHT
             holder.chatHdrLeft.text = sent
-            holder.chatHdrRight.text = Singleton.memberInfo!!["mbr_name"]
+            val to = when (chats[position]["cht_to"]) {
+                "0" -> "전체"
+                "-2" -> "상황실"
+                else -> chats[position]["cht_to_team"]!! + "조"
+            }
+            holder.chatHdrRight.text = Singleton.memberInfo!!["mbr_name"] + " → $to"
         } else {
+            val from: String = when (chats[position]["cht_from_idx"]) {
+                "0" -> "상황실"
+                else -> chats[position]["cht_from_name"]!!
+            }
             val to: String = when (chats[position]["cht_to"]) {
                 "0" -> "전원"
                 Singleton.memberInfo!!["mbr_idx"] -> Singleton.memberInfo!!["mbr_name"]!!
                 else -> chats[position]["cht_to_team"] + "조"
             }
-            holder.chatHdrLeft.text = "→ $to"
+            holder.chatText.gravity = Gravity.LEFT
+            holder.chatHdrLeft.text = "$from → $to"
 
             holder.chatItemCl.setBackgroundColor(if (position % 2 == 0) Color.rgb(42, 42, 42) else Color.rgb(34, 34, 34))
             holder.chatHdrRight.text = sent

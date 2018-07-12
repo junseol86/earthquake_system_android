@@ -1,11 +1,9 @@
 package com.akadev.hyeonmin.eq_sys_android.firebase
 
-import android.app.ActivityManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
@@ -32,10 +30,13 @@ class MessagingSergvice: FirebaseMessagingService() {
 
 //            앱이 꺼져있다면 푸시알람을 띄움
         } else {
+
             var ChannelId = "EqSystem"
             val nb = NotificationCompat.Builder(this, ChannelId)
                     .setDefaults(NotificationCompat.DEFAULT_ALL)
-                    .setSmallIcon(R.drawable.ic_situation)
+                    .setSmallIcon(R.mipmap.ic_launcher_round_2)
+                    .setBadgeIconType(R.mipmap.ic_launcher_2)
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round_2))
                     .setContentTitle(rm!!.data["title"])
                     .setContentText(rm!!.data["body"])
                     .setColor(Color.WHITE)
@@ -50,7 +51,13 @@ class MessagingSergvice: FirebaseMessagingService() {
             sb.addNextIntent(resultIntent)
 
             val ri = sb.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
-            nb.setContentIntent(ri)
+
+//            풀스크린인텐트를 사용하면 노티피케이션이 안 사라짐.  구버전에선 안 되는듯
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                nb.setFullScreenIntent(ri, true)
+            } else {
+                nb.setContentIntent(ri)
+            }
 
             val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

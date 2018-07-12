@@ -29,7 +29,7 @@ class Chat(val chatMng: ChatManager) {
 
             override fun getHeaders(): MutableMap<String, String> {
                 var map = HashMap<String, String>()
-                map.put("cht_to_team", Singleton.memberInfo!!["mbr_team"]!!)
+                map.put("mbr_team", Singleton.memberInfo!!["mbr_team"]!!)
                 map.put("mbr_idx", Singleton.memberInfo!!["mbr_idx"]!!)
                 return map
             }
@@ -52,7 +52,7 @@ class Chat(val chatMng: ChatManager) {
 
             override fun getHeaders(): MutableMap<String, String> {
                 var map = HashMap<String, String>()
-                map.put("cht_to_team", Singleton.memberInfo!!["mbr_team"]!!)
+                map.put("mbr_team", Singleton.memberInfo!!["mbr_team"]!!)
                 map.put("mbr_idx", Singleton.memberInfo!!["mbr_idx"]!!)
                 return map
             }
@@ -75,9 +75,17 @@ class Chat(val chatMng: ChatManager) {
             }
             override fun getParams(): MutableMap<String, String> {
                 var map = HashMap<String, String>()
+                val chtTo = when (chatMng.chatFilter) {
+                    0 -> "-2"
+                    1 -> "0"
+                    else -> "-1"
+                }
+                val chtToTeam = if (chatMng.chatFilter == 2) Singleton.memberInfo!!["mbr_team"]!! else "-1"
                 map.put("jwtToken", Singleton.jwtToken)
                 map.put("cht_from_idx", Singleton.memberInfo!!["mbr_idx"]!!)
                 map.put("cht_from_name", Singleton.memberInfo!!["mbr_name"]!!)
+                map.put("cht_to", chtTo)
+                map.put("cht_to_team", chtToTeam)
                 map.put("cht_text", text)
                 return map
             }

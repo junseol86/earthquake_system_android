@@ -16,7 +16,9 @@ class FcmToken(val activity: MainActivity) {
         val loginRequest: StringRequest = object: StringRequest(Request.Method.PUT,
                 Const.apiUrl + "member/setFcmToken",
                 Response.Listener { response ->
-                    Singleton.refreshJwtToken(response)
+                    if (fcmToken.isNotEmpty()) {
+                        Singleton.refreshJwtToken(response)
+                    }
                 },
                 ErrorDialogListener(activity.ac!!)) {
 

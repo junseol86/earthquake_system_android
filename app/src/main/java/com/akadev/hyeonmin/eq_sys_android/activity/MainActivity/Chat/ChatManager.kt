@@ -1,5 +1,6 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.Chat
 
+import android.graphics.Color
 import android.os.Handler
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -27,10 +28,28 @@ class ChatManager(val activity: MainActivity) {
 
     val seeChatBtn: ConstraintLayout = activity.findViewById(R.id.see_chat_btn)
 
-    var chatTV: TextView = activity.findViewById(R.id.chat)
+    val chatTV: TextView = activity.findViewById(R.id.chat)
 
-    var chatTextET: EditText = activity.findViewById(R.id.chat_et)
-    var chatSendBtn: Button = activity.findViewById(R.id.chat_send)
+    val chatTextET: EditText = activity.findViewById(R.id.chat_et)
+    val chatSendBtn: Button = activity.findViewById(R.id.chat_send)
+
+    val chatFilterAry = arrayOf(
+            arrayOf(
+                    activity.findViewById(R.id.chat_filter_hq) as ConstraintLayout,
+                    activity.findViewById(R.id.chat_filter_hq_txt) as TextView
+                    ),
+            arrayOf(
+                    activity.findViewById(R.id.chat_filter_all) as ConstraintLayout,
+                    activity.findViewById(R.id.chat_filter_all_txt) as TextView
+
+            ),
+            arrayOf(
+                    activity.findViewById(R.id.chat_filter_team) as ConstraintLayout,
+                    activity.findViewById(R.id.chat_filter_team_txt) as TextView
+            )
+    )
+//    0: 상황실에게, 1: 전체에게, 2: 같은 조에게
+    var chatFilter = 0
 
     init {
         seeChatBtn.setOnClickListener {
@@ -38,9 +57,16 @@ class ChatManager(val activity: MainActivity) {
             chatCl.visibility = View.VISIBLE
         }
 
+        visChatFilter()
+        for (i in 0 until chatFilterAry.size) {
+            chatFilterAry[i][0].setOnClickListener {
+                chatFilter = i
+                visChatFilter()
+            }
+        }
+
         chatRv.layoutManager = LinearLayoutManager(activity)
         chatRv.adapter = chatAdt
-
 
 //        chatRv.scrollToPosition(chatList.size - 1)
 
@@ -75,6 +101,21 @@ class ChatManager(val activity: MainActivity) {
         chatVly.getListBefore()
     }
 
+    fun visChatFilter() {
+        for (i in 0 until chatFilterAry.size) {
+            if (i == chatFilter) {
+                chatFilterAry[i][0].setBackgroundColor(Color.parseColor("#FFFFFF"))
+                (chatFilterAry[i][1] as TextView).setTextColor(Color.parseColor("#000000"))
+
+            } else {
+                chatFilterAry[i][0].setBackgroundColor(Color.parseColor("#888888"))
+                (chatFilterAry[i][1] as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+            }
+        }
+        val teamNo = Singleton.memberInfo!!["mbr_team"]
+        (chatFilterAry[2][1] as TextView).text = "→ ${if (teamNo == "0") "미편성" else (teamNo + "조")}"
+    }
+
     fun chatGetListBeforeResult(downList: List<Map<String, String>>, scrollToBottom: Boolean) {
         if (downList.isEmpty()) {
             return
@@ -93,7 +134,11 @@ class ChatManager(val activity: MainActivity) {
             return
         }
         Collections.reverse(downList)
-        chatList.addAll(downList)
+        downList.map {
+            if (chatList.last()["cht_idx"]!!.toInt() < it["cht_idx"]!!.toInt()) {
+                chatList.add(it)
+            }
+        }
 
         chatRv.scrollToPosition(chatList.size - 1)
         chatTV.text = chatList.last()["cht_text"]

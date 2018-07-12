@@ -2,6 +2,9 @@ package com.akadev.hyeonmin.eq_sys_android.activity.extension
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import com.akadev.hyeonmin.eq_sys_android.util.Caches
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.Login
@@ -39,5 +42,11 @@ open class ActivityCommon(val atvt: Activity, val af: ACFuncs) {
         caches?.id = id
         caches?.pw = pw
         af.loginResult()
+    }
+
+    fun askCallPermission() {
+        if (ContextCompat.checkSelfPermission(atvt, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(atvt, arrayOf(android.Manifest.permission.CALL_PHONE), 0)
+        }
     }
 }

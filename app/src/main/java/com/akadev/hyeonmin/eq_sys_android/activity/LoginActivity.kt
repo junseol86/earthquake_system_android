@@ -27,6 +27,7 @@ class LoginActivity: Activity() {
         ac = ActivityCommon(this, object:ACFuncs {
             override fun loginResult() {
                 startActivity(Intent(thisActivity, MainActivity::class.java))
+                finish()
             }
         })
 
