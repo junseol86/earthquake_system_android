@@ -26,10 +26,11 @@ class TopBar(var atvt: MainActivity) {
         myStatBtn.setOnClickListener {
             AlertDialog.Builder(atvt)
                     .setTitle("메뉴")
-                    .setItems(arrayOf("직원들 목록/전화", "로그아웃")) { _, i ->
+                    .setItems(arrayOf("출동지까지 도착 소요시간 전송", "직원들 목록/전화", "로그아웃")) { _, i ->
                         when (i) {
-                            0 -> showMembers()
-                            1 -> logout()
+                            0 -> atvt.rt?.setReportPopup(true)
+                            1 -> showMembers()
+                            2 -> logout()
                         }
                     }
                     .show()
@@ -59,13 +60,14 @@ class TopBar(var atvt: MainActivity) {
                 "1" -> "대응 1단계"
                 else -> "대응 2단계"
             }
+            atvt.rt?.setReportPopup(true)
         }
         situation.text = sitStr
     }
 
     fun setTeamAndName() {
         val team = Singleton.memberInfo!!["mbr_team"]
-        var teamStr = if (team == "0") "미배정 - " else "${team}조 - "
+        val teamStr = if (team == "0") "미배정 - " else "${team}조 - "
         teamAndName.text = teamStr + Singleton.memberInfo!!["mbr_name"]
     }
 

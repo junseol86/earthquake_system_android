@@ -10,8 +10,8 @@ class BrCstReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val ma = context as MainActivity
         val type = intent!!.extras!!["type"]
-        val title = intent!!.extras!!["title"]
-        val body = intent!!.extras!!["body"]
+        val title = intent.extras!!["title"]
+        val body = intent.extras!!["body"]
 
         if (type == "chat") {
             ma.chatMng!!.chatVly.getListAfter()
@@ -22,6 +22,13 @@ class BrCstReceiver: BroadcastReceiver() {
                     .setTitle(title.toString())
                     .setMessage(body.toString())
                     .show()
+        } else if (type == "earthquake") {
+            ma.earthquakeGetList()
+            AlertDialog.Builder(ma)
+                    .setTitle(title.toString())
+                    .setMessage(body.toString())
+                    .show()
+            ma.rt?.setReportPopup(true)
         }
     }
 }

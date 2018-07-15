@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import android.widget.ListView
 import com.akadev.hyeonmin.eq_sys_android.R
@@ -18,7 +19,8 @@ class ResourceProvider(context: Context): NMapResourceProvider(context), NMapCal
 
         var resourceId = findResourceIdForMarker(markerId, focused)
         if (resourceId > 0) {
-            marker = mContext.resources.getDrawable(resourceId)
+//            marker = mContext.resources.getDrawable(resourceId)
+            marker = ContextCompat.getDrawable(mContext, resourceId)
         } else {
             resourceId = 4 * markerId
             if (focused) {
@@ -122,9 +124,9 @@ class ResourceProvider(context: Context): NMapResourceProvider(context), NMapCal
             if (item.showRightButton()) {
                 val drawable = arrayOfNulls<Drawable>(3)
 
-                drawable[0] = mContext.resources.getDrawable(R.drawable.btn_green_normal)
-                drawable[1] = mContext.resources.getDrawable(R.drawable.btn_green_pressed)
-                drawable[2] = mContext.resources.getDrawable(R.drawable.btn_green_highlight)
+                drawable[0] = ContextCompat.getDrawable(mContext, R.drawable.btn_green_normal)
+                drawable[1] = ContextCompat.getDrawable(mContext, R.drawable.btn_green_pressed)
+                drawable[2] = ContextCompat.getDrawable(mContext, R.drawable.btn_green_highlight)
 
                 return drawable as Array<Drawable>
             }
@@ -142,9 +144,9 @@ class ResourceProvider(context: Context): NMapResourceProvider(context), NMapCal
 
                 when (poiItem.rightAccessoryId) {
                     PoiFlag.CLICKABLE_ARROW -> {
-                        drawable[0] = mContext.resources.getDrawable(R.drawable.pin_ballon_arrow)
-                        drawable[1] = mContext.resources.getDrawable(R.drawable.pin_ballon_on_arrow)
-                        drawable[2] = mContext.resources.getDrawable(R.drawable.pin_ballon_on_arrow)
+                        drawable[0] = ContextCompat.getDrawable(mContext, R.drawable.pin_ballon_arrow)
+                        drawable[1] = ContextCompat.getDrawable(mContext, R.drawable.pin_ballon_on_arrow)
+                        drawable[2] = ContextCompat.getDrawable(mContext, R.drawable.pin_ballon_on_arrow)
                     }
                 }
 
@@ -164,7 +166,7 @@ class ResourceProvider(context: Context): NMapResourceProvider(context), NMapCal
             }
         }
 
-        val drawable = mContext.resources.getDrawable(R.drawable.pin_ballon_bg)
+        val drawable = ContextCompat.getDrawable(mContext, R.drawable.pin_ballon_bg) as Drawable
 
         return drawable
     }
@@ -193,8 +195,8 @@ class ResourceProvider(context: Context): NMapResourceProvider(context), NMapCal
     override fun getLocationDot(): Array<Drawable> {
         val drawable = arrayOfNulls<Drawable>(2)
 
-        drawable[0] = mContext.resources.getDrawable(R.drawable.pubtrans_ic_mylocation_off)
-        drawable[1] = mContext.resources.getDrawable(R.drawable.pubtrans_ic_mylocation_on)
+        drawable[0] = ContextCompat.getDrawable(mContext, R.drawable.pubtrans_ic_mylocation_off)
+        drawable[1] = ContextCompat.getDrawable(mContext, R.drawable.pubtrans_ic_mylocation_on)
 
         for (i in drawable.indices) {
             val w = drawable[i]!!.intrinsicWidth / 2

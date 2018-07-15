@@ -3,11 +3,11 @@ package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity
 import android.app.AlertDialog
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.Chat.ChatManager
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
@@ -27,9 +27,11 @@ import kotlin.collections.ArrayList
 class MainActivity : NMapActivity() {
 
     var ac: ActivityCommon? = null
+    var rt: Report? = null
     var tb: TopBar? = null
     var bb: BottomBar? = null
     var nm: NaverMap? = null
+    var ml: MyLocation? = null
 
     var fcmTokenVly: FcmToken? = null
     var chatMng: ChatManager? = null
@@ -51,9 +53,12 @@ class MainActivity : NMapActivity() {
         fcmTokenVly = FcmToken(this)
         fcmTokenSend()
 
+        rt = Report(this)
         tb = TopBar(this)
         tb?.setTeamAndName()
         bb = BottomBar(this)
+        ml = MyLocation(this)
+        ml?.getLocWithPermissionCheck()
 
         earthquakeVly = Earthquake(this)
         structureVly = Structure(this)
@@ -127,6 +132,11 @@ class MainActivity : NMapActivity() {
             return
         }
 
+        if (rt!!.isReportPopupOn()) {
+            rt!!.setReportPopup(false)
+            return
+        }
+
         AlertDialog.Builder(this)
                 .setTitle("경주 지진알림을 종료하시겠습니까?")
                 .setPositiveButton("확인") { _, _ ->
@@ -153,6 +163,18 @@ class MainActivity : NMapActivity() {
     override fun onPause() {
         super.onPause()
         Singleton.activityOn = false
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?, grantResults: IntArray?) {
+        if (requestCode == ml!!.REQ_CODE) {
+            if (permissions != null && grantResults != null) {
+                (0 until permissions.size).map {
+                    if (permissions[it] == android.Manifest.permission.ACCESS_FINE_LOCATION && grantResults[it] == PackageManager.PERMISSION_GRANTED) {
+                        ml?.getLocWithPermissionCheck()
+                    }
+                }
+            }
+        }
     }
 
 }

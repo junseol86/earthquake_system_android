@@ -28,19 +28,19 @@ open class ActivityCommon(val atvt: Activity, val af: ACFuncs) {
     }
 
     fun login(id: String, pw: String) {
-        loginVly?.login(id, pw)
+        loginVly.login(id, pw)
     }
 
     fun loginWithCache() {
-        if (caches!!.id.isNotEmpty() && caches!!.pw.isNotEmpty()) {
-            login(caches!!.id, caches!!.pw)
+        if (caches.id.isNotEmpty() && caches.pw.isNotEmpty()) {
+            login(caches.id, caches.pw)
         }
     }
 
     open fun loginResult(id: String, pw: String, jwtToken: String) {
         Singleton.loginResult(jwtToken)
-        caches?.id = id
-        caches?.pw = pw
+        caches.id = id
+        caches.pw = pw
         af.loginResult()
     }
 

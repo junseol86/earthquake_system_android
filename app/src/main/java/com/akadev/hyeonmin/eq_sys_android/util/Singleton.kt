@@ -1,5 +1,6 @@
 package com.akadev.hyeonmin.eq_sys_android.util
 
+import android.location.Location
 import android.util.Base64
 import org.json.JSONObject
 
@@ -10,6 +11,7 @@ object Singleton {
     var memberInfo: Map<String, String>? = null
     var earthquakeInfo: Map<String, String>? = null
     var fcmRefreshed = false
+    var myLoc: Location? = null
 
     var getChatsBeforeLocked = true
 

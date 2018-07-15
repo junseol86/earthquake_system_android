@@ -34,15 +34,23 @@ class MessagingSergvice: FirebaseMessagingService() {
             var ChannelId = "EqSystem"
             val nb = NotificationCompat.Builder(this, ChannelId)
                     .setDefaults(NotificationCompat.DEFAULT_ALL)
-                    .setSmallIcon(R.mipmap.ic_launcher_round_2)
                     .setBadgeIconType(R.mipmap.ic_launcher_2)
-                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round_2))
                     .setContentTitle(rm!!.data["title"])
                     .setContentText(rm!!.data["body"])
                     .setColor(Color.WHITE)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setAutoCancel(true)
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                nb.setSmallIcon(R.mipmap.ic_launcher_round_2)
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round_2))
+
+            } else {
+                nb.setSmallIcon(R.mipmap.ic_launcher_round_3)
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round_3))
+
+            }
 
             val resultIntent = Intent(this, LoginActivity::class.java)
 
