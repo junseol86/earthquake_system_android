@@ -3,6 +3,9 @@ package com.akadev.hyeonmin.eq_sys_android.util
 import com.akadev.hyeonmin.eq_sys_android.R
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 object Tool {
 
@@ -37,5 +40,16 @@ object Tool {
         return dist
     }
 
+    fun isReportedToday(dateStr: String?): Boolean {
+        if (dateStr == null || dateStr == "null")
+            return false
+
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA)
+        format.timeZone = TimeZone.getTimeZone("ASIA/SEOUL")
+        val givenDate = format.parse(dateStr)
+        val today = Date()
+        val diff = TimeUnit.DAYS.convert(today.time - givenDate.time, TimeUnit.MILLISECONDS)
+        return (diff < 1)
+    }
 
 }

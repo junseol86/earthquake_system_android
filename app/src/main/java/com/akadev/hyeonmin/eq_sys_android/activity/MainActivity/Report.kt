@@ -13,6 +13,7 @@ class Report(val atvt: MainActivity) {
     val reportCl = atvt.findViewById(R.id.report_popup) as ConstraintLayout
     val reportEt = atvt.findViewById(R.id.report_et) as EditText
     val reportOkBtn = atvt.findViewById(R.id.report_ok_cl) as ConstraintLayout
+    val reportRejectBtn = atvt.findViewById(R.id.report_reject_cl) as ConstraintLayout
     val reportCancelBtn = atvt.findViewById(R.id.report_cancel_cl) as ConstraintLayout
 
     init {
@@ -21,9 +22,12 @@ class Report(val atvt: MainActivity) {
         }
         reportOkBtn.setOnClickListener {
             val arrival = reportEt.text.toString()
-            if (arrival.isNotEmpty()) {
+            if (arrival.isNotEmpty() && arrival.toInt() > 0) {
                 al.arrivalReport(arrival)
             }
+        }
+        reportRejectBtn.setOnClickListener {
+            al.arrivalReport("-1")
         }
     }
 

@@ -1,16 +1,19 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.support.v4.content.ContextCompat
+import android.widget.Button
 import com.akadev.hyeonmin.eq_sys_android.NaverMapTool.PoiFlag
 import com.akadev.hyeonmin.eq_sys_android.NaverMapTool.ResourceProvider
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.util.Const
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
+import com.akadev.hyeonmin.eq_sys_android.util.Tool
 import com.nhn.android.maps.NMapView
 import com.nhn.android.maps.maplib.NGeoPoint
-import com.nhn.android.maps.overlay.NMapCircleData
-import com.nhn.android.maps.overlay.NMapCircleStyle
-import com.nhn.android.maps.overlay.NMapPOIdata
-import com.nhn.android.maps.overlay.NMapPathLineStyle
+import com.nhn.android.maps.overlay.*
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay
 import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay
@@ -22,8 +25,19 @@ class NaverMap(val atvt: MainActivity) {
     var resourceProvider = ResourceProvider(atvt)
     var overlayManager = NMapOverlayManager(atvt, mapView, resourceProvider)
 
+    var myLocBtn: Button = atvt.findViewById(R.id.my_loc_btn)
+
     var strPoiData = NMapPOIdata(1000, resourceProvider)
     var strPoiDataOverlay: NMapPOIdataOverlay? = null
+
+    var sptPoiData = NMapPOIdata(1000, resourceProvider)
+    var sptPoiDataOverlay: NMapPOIdataOverlay? = null
+
+    var myPoiData = NMapPOIdata(10, resourceProvider)
+    var myPoiDataOverlay: NMapPOIdataOverlay? = null
+
+    var memberPoiData = NMapPOIdata(1000, resourceProvider)
+    var memberPoiDataOverlay: NMapPOIdataOverlay? = null
 
     var eqCircleData: NMapCircleData? = null
     var eqCircleStyle = NMapCircleStyle(atvt)
@@ -42,6 +56,76 @@ class NaverMap(val atvt: MainActivity) {
         mapController.mapCenter = NGeoPoint(Const.initLng, Const.initLat)
 
         atvt.earthquakeGetList()
+
+        myLocBtn.setOnClickListener {
+            if (Singleton.myLoc != null) {
+                mapController.mapCenter = NGeoPoint(Singleton.myLoc!!.longitude, Singleton.myLoc!!.latitude)
+            }
+        }
+    }
+
+    fun showMyPosition (lat: Double, lng: Double) {
+        myPoiData.beginPOIdata(0)
+        myPoiData.removeAllPOIdata()
+        myPoiData.addPOIitem(NGeoPoint(lng, lat), "내 위치", PoiFlag.MEMBER_I, "")
+        myPoiData.endPOIdata()
+        setMyPoiDataOverlay()
+    }
+
+    fun setMyPoiDataOverlay() {
+        if (myPoiDataOverlay != null) {
+            overlayManager.removeOverlay(myPoiDataOverlay)
+        }
+        myPoiDataOverlay = overlayManager.createPOIdataOverlay(myPoiData, null)
+    }
+
+    fun showMemberPosition () {
+        memberPoiData.beginPOIdata(0)
+        memberPoiData.removeAllPOIdata()
+
+        atvt.members?.map {
+
+            if (it["mbr_idx"] != Singleton.memberInfo!!["mbr_idx"] &&
+                    Tool.isReportedToday(it["mbr_pos_last_report"])) {
+                val pos = NGeoPoint(it["longitude"]!!.toDouble(), it["latitude"]!!.toDouble())
+                var markerString = "[${if (it["mbr_team"].toString() == "0") "미편성" else it["mbr_team"].toString()}] ${it["mbr_name"]}"
+                val mkr = if (Tool.isReportedToday(it["mbr_arr_last_report"])) {
+                    if (it["mbr_arrive_in"] != "-1")
+                        PoiFlag.MEMBER_POS
+                    else
+                        PoiFlag.MEMBER_REJECT
+                } else {
+                    PoiFlag.MEMBER
+                }
+                memberPoiData.addPOIitem(pos, markerString, mkr, it["mbr_phone"])
+
+            }
+
+        }
+
+        myPoiData.endPOIdata()
+        setMemberPoiDataOverlay()
+    }
+
+    fun setMemberPoiDataOverlay() {
+        if (memberPoiDataOverlay != null) {
+            overlayManager.removeOverlay(memberPoiDataOverlay)
+        }
+        memberPoiDataOverlay = overlayManager.createPOIdataOverlay(memberPoiData, null)
+        memberPoiDataOverlay?.onStateChangeListener = object: NMapPOIdataOverlay.OnStateChangeListener {
+            override fun onFocusChanged(p0: NMapPOIdataOverlay?, p1: NMapPOIitem?) {
+            }
+            override fun onCalloutClick(p0: NMapPOIdataOverlay?, p1: NMapPOIitem?) {
+
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse("tel:${p1!!.tag}")
+                if (ContextCompat.checkSelfPermission(atvt, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    atvt.startActivity(intent)
+                } else {
+                    atvt.ac?.askCallPermission()
+                }
+            }
+        }
     }
 
     fun showStructures () {
@@ -49,8 +133,8 @@ class NaverMap(val atvt: MainActivity) {
         strPoiData.removeAllPOIdata()
         atvt.structures?.map {
             val pos = NGeoPoint(it["longitude"]!!.toDouble(), it["latitude"]!!.toDouble())
-            var markerString = it["str_name"].toString()
-            var marker = when (it["on_team"]!!.toInt()) {
+            val markerString = it["str_name"].toString()
+            val marker = when (it["on_team"]!!.toInt()) {
                 1 -> PoiFlag.TM_1
                 2 -> PoiFlag.TM_2
                 3 -> PoiFlag.TM_3
@@ -61,7 +145,7 @@ class NaverMap(val atvt: MainActivity) {
                 8 -> PoiFlag.TM_8
                 else -> PoiFlag.TM_0
             }
-            strPoiData?.addPOIitem(pos, markerString, marker, "")
+            strPoiData.addPOIitem(pos, markerString, marker, "")
         }
         strPoiData.endPOIdata()
         setStrPoiDataOverlay()
@@ -72,6 +156,31 @@ class NaverMap(val atvt: MainActivity) {
             overlayManager.removeOverlay(strPoiDataOverlay)
         }
         strPoiDataOverlay = overlayManager.createPOIdataOverlay(strPoiData, null)
+    }
+
+    fun showSpots () {
+        sptPoiData.beginPOIdata(0)
+        sptPoiData.removeAllPOIdata()
+
+        atvt.spots?.map {
+            val pos = NGeoPoint(it["longitude"]!!.toDouble(), it["latitude"]!!.toDouble())
+            val markerString = it["sp_name"].toString()
+            val marker = when (it["sp_type"]) {
+                "branch" -> PoiFlag.BRANCH
+                "ic" -> PoiFlag.IC
+                else -> PoiFlag.JC
+            }
+            sptPoiData.addPOIitem(pos, markerString, marker, "")
+        }
+
+        sptPoiData.endPOIdata()
+        setSptPoiDataOverlay()
+    }
+    fun setSptPoiDataOverlay() {
+        if (sptPoiDataOverlay != null) {
+            overlayManager.removeOverlay(sptPoiDataOverlay)
+        }
+        sptPoiDataOverlay = overlayManager.createPOIdataOverlay(sptPoiData, null)
     }
 
     fun drawEqCircle () {

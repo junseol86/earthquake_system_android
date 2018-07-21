@@ -20,6 +20,8 @@ object PoiFlag {
 
     var MEMBER = base + 301
     var MEMBER_POS = base + 302
+    var MEMBER_REJECT = base + 303
+    var MEMBER_I = base + 304
 
     var CLICKABLE_ARROW = base + 401
 

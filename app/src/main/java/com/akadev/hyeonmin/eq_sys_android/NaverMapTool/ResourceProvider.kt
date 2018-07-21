@@ -75,7 +75,12 @@ class ResourceProvider(context: Context): NMapResourceProvider(context), NMapCal
             ResourceIdsOnMap(PoiFlag.TM_5, R.drawable.tm_5, R.drawable.tm_5),
             ResourceIdsOnMap(PoiFlag.TM_6, R.drawable.tm_6, R.drawable.tm_6),
             ResourceIdsOnMap(PoiFlag.TM_7, R.drawable.tm_7, R.drawable.tm_7),
-            ResourceIdsOnMap(PoiFlag.TM_8, R.drawable.tm_8, R.drawable.tm_8)
+            ResourceIdsOnMap(PoiFlag.TM_8, R.drawable.tm_8, R.drawable.tm_8),
+
+            ResourceIdsOnMap(PoiFlag.MEMBER, R.drawable.member, R.drawable.member),
+            ResourceIdsOnMap(PoiFlag.MEMBER_POS, R.drawable.member_pos, R.drawable.member_pos),
+            ResourceIdsOnMap(PoiFlag.MEMBER_REJECT, R.drawable.member_reject, R.drawable.member_reject),
+            ResourceIdsOnMap(PoiFlag.MEMBER_I, R.drawable.member_pos_i, R.drawable.member_pos_i)
 
     )
 

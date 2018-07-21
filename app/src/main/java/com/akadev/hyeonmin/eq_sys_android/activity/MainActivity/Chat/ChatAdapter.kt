@@ -29,6 +29,7 @@ class ChatAdapter(val chats: ArrayList<Map<String, String>>): RecyclerView.Adapt
         try {
             var sentString = chats[position]["cht_sent"]
             var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            dateFormat.timeZone = TimeZone.getTimeZone("ASIA/SEOUL")
             var dateTime = dateFormat.parse(sentString)
             val sentCal = Calendar.getInstance()
             sentCal.time = dateTime

@@ -3,8 +3,6 @@ package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity
 import android.app.AlertDialog
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -14,14 +12,10 @@ import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ActivityCommon
 import com.akadev.hyeonmin.eq_sys_android.firebase.BrCstReceiver
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
-import com.akadev.hyeonmin.eq_sys_android.volley.Earthquake
-import com.akadev.hyeonmin.eq_sys_android.volley.FcmToken
-import com.akadev.hyeonmin.eq_sys_android.volley.Member
-import com.akadev.hyeonmin.eq_sys_android.volley.Structure
+import com.akadev.hyeonmin.eq_sys_android.volley.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.nhn.android.maps.NMapActivity
 import java.util.*
-import java.util.jar.Manifest
 import kotlin.collections.ArrayList
 
 class MainActivity : NMapActivity() {
@@ -37,6 +31,9 @@ class MainActivity : NMapActivity() {
     var chatMng: ChatManager? = null
 
     var earthquakeVly: Earthquake? = null
+
+    var spotVly: Spot? = null
+    var spots: ArrayList<Map<String, String>>? = null
 
     var structureVly: Structure? = null
     var structures: ArrayList<Map<String, String>>? = null
@@ -62,7 +59,11 @@ class MainActivity : NMapActivity() {
 
         earthquakeVly = Earthquake(this)
         structureVly = Structure(this)
+        spotVly = Spot(this)
         memberVly = Member(this)
+
+        spotGetList()
+
         memberGetList()
 
         chatMng = ChatManager(this)
@@ -94,6 +95,14 @@ class MainActivity : NMapActivity() {
         nm?.showStructures()
     }
 
+    fun spotGetList() {
+        spotVly?.getList()
+    }
+    fun spotGetListResult(spt: ArrayList<Map<String, String>>) {
+        spots = spt
+        nm?.showSpots()
+    }
+
     fun memberGetList() {
         memberVly?.getList()
     }
@@ -113,6 +122,11 @@ class MainActivity : NMapActivity() {
         members = ArrayList()
         members?.addAll(list1)
         members?.addAll(list2)
+        nm?.showMemberPosition()
+
+        Handler().postDelayed( {
+            memberGetList()
+        }, 10000)
     }
 
 

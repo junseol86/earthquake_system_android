@@ -26,7 +26,7 @@ class TopBar(var atvt: MainActivity) {
         myStatBtn.setOnClickListener {
             AlertDialog.Builder(atvt)
                     .setTitle("메뉴")
-                    .setItems(arrayOf("출동지까지 도착 소요시간 전송", "직원들 목록/전화", "로그아웃")) { _, i ->
+                    .setItems(arrayOf("도착 소요시간 또는 응소불가 전송", "직원들 목록/전화", "로그아웃")) { _, i ->
                         when (i) {
                             0 -> atvt.rt?.setReportPopup(true)
                             1 -> showMembers()
@@ -78,10 +78,6 @@ class TopBar(var atvt: MainActivity) {
             }
             val telAry = Array(atvt.members!!.size) {
                 atvt.members!![it]["mbr_phone"]
-            }
-
-            for (i in 0 until mbrAry.size) {
-                println(mbrAry[i])
             }
 
             AlertDialog.Builder(atvt)
