@@ -1,11 +1,18 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity
 
 import android.app.AlertDialog
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.view.View
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.Chat.ChatManager
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
@@ -26,6 +33,7 @@ class MainActivity : NMapActivity() {
     var bb: BottomBar? = null
     var nm: NaverMap? = null
     var ml: MyLocation? = null
+    var mp: MenuPopup? = null
 
     var fcmTokenVly: FcmToken? = null
     var chatMng: ChatManager? = null
@@ -45,7 +53,7 @@ class MainActivity : NMapActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ac = ActivityCommon(this, object: ACFuncs {})
-        ac?.askCallPermission()
+//        ac?.askCallPermission()
 
         fcmTokenVly = FcmToken(this)
         fcmTokenSend()
@@ -55,7 +63,7 @@ class MainActivity : NMapActivity() {
         tb?.setTeamAndName()
         bb = BottomBar(this)
         ml = MyLocation(this)
-        ml?.getLocWithPermissionCheck()
+        requestPermissions()
 
         earthquakeVly = Earthquake(this)
         structureVly = Structure(this)
@@ -73,6 +81,23 @@ class MainActivity : NMapActivity() {
         registerReceiver(BrCstReceiver(), intFtr)
 
         nm = NaverMap(this)
+        mp = MenuPopup(this)
+    }
+
+    fun requestPermissions () {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SYSTEM_ALERT_WINDOW,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.CALL_PHONE), 0)
+        }
+
+//        M 버전 이상일 시 알림소리 강제변경할 때 꼭 필요
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                !((getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).isNotificationPolicyAccessGranted)) {
+            startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
+        }
     }
 
     fun earthquakeGetList() {
@@ -142,6 +167,12 @@ class MainActivity : NMapActivity() {
     }
 
     override fun onBackPressed() {
+
+        if (mp?.menuPuCl?.visibility == View.VISIBLE) {
+            mp?.menuPuCl?.visibility = View.GONE
+            return
+        }
+
         if (chatMng!!.offChatIfOn()) {
             return
         }
@@ -180,12 +211,10 @@ class MainActivity : NMapActivity() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?, grantResults: IntArray?) {
-        if (requestCode == ml!!.REQ_CODE) {
-            if (permissions != null && grantResults != null) {
-                (0 until permissions.size).map {
-                    if (permissions[it] == android.Manifest.permission.ACCESS_FINE_LOCATION && grantResults[it] == PackageManager.PERMISSION_GRANTED) {
-                        ml?.getLocWithPermissionCheck()
-                    }
+        if (permissions != null && grantResults != null) {
+            (0 until permissions.size).map {
+                if (permissions[it] == android.Manifest.permission.ACCESS_FINE_LOCATION && grantResults[it] == PackageManager.PERMISSION_GRANTED) {
+                    ml?.getLocWithPermissionCheck()
                 }
             }
         }

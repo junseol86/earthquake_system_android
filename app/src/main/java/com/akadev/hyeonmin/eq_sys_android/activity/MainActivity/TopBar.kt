@@ -38,13 +38,21 @@ class TopBar(var atvt: MainActivity) {
     }
 
     fun logout() {
-        atvt.fcmTokenVly?.setFcmToken("")
-        atvt.ac?.caches?.id = ""
-        atvt.ac?.caches?.pw = ""
-        Singleton.memberInfo = null
-        Singleton.jwtToken = ""
-        atvt.startActivity(Intent(atvt, LoginActivity::class.java))
-        atvt.finish()
+        AlertDialog.Builder(atvt)
+                .setTitle("로그아웃")
+                .setMessage("로그아웃하시겠습니까?")
+                .setPositiveButton("확인") { _, _ ->
+                    atvt.fcmTokenVly?.setFcmToken("")
+                    atvt.ac?.caches?.id = ""
+                    atvt.ac?.caches?.pw = ""
+                    Singleton.memberInfo = null
+                    Singleton.jwtToken = ""
+                    atvt.startActivity(Intent(atvt, LoginActivity::class.java))
+                    atvt.finish()
+                }
+                .setNegativeButton("취소") { _, _ ->
+                }
+                .show()
     }
 
     fun setSituation() {

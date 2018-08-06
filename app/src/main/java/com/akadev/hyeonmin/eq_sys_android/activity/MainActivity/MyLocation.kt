@@ -10,12 +10,8 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.View
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MyLocation(val atvt: MainActivity) {
-
-    val REQ_CODE = 0
 
     var lMng: LocationManager = atvt.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     var lLstn: LocationListener = object: LocationListener {
@@ -47,7 +43,7 @@ class MyLocation(val atvt: MainActivity) {
 
     fun getLocWithPermissionCheck () {
         if (ContextCompat.checkSelfPermission(atvt, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(atvt, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE)
+            ActivityCompat.requestPermissions(atvt, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1)
         } else {
             lMng.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, lLstn)
         }
