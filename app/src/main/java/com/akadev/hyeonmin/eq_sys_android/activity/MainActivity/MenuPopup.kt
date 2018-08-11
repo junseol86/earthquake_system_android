@@ -4,14 +4,12 @@ import android.support.constraint.ConstraintLayout
 import android.view.View
 import android.widget.ImageView
 import com.akadev.hyeonmin.eq_sys_android.R
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MenuPopup(val atvt: MainActivity) {
 
     val menuPuCl = atvt.findViewById(R.id.menu_popup) as ConstraintLayout
     val menuPuBtn = atvt.findViewById(R.id.menu_pu_btn) as ImageView
-    val menuSit = atvt.findViewById(R.id.menu_sit) as ConstraintLayout
+    val menuSit = atvt.findViewById(R.id.menu_strp) as ConstraintLayout
     val menuRep = atvt.findViewById(R.id.menu_rep) as ConstraintLayout
     val menuCht = atvt.findViewById(R.id.menu_cht) as ConstraintLayout
     val menuMem = atvt.findViewById(R.id.menu_mem) as ConstraintLayout

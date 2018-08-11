@@ -10,8 +10,8 @@ android {
         applicationId "com.akadev.hyeonmin.eq_sys_android"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 4
-        versionName "1.4"
+        versionCode 7
+        versionName "1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

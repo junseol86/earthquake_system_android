@@ -32,33 +32,44 @@
                 android:layout_height="0dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
-                android:background="#333333"
+                android:background="#111111"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/see_chat_btn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:id="@+id/on_team_img"
+                    android:layout_width="41dp"
+                    android:layout_height="48dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/ic_str"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/on_team_tv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/on_team_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginStart="16dp"
-                    android:text="할당 구조물 보기"
+                    android:text="담당 구조물"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/see_chat_btn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#333333"
+                android:background="#111111"
                 android:clickable="true"
                 android:focusableInTouchMode="false"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -72,6 +83,7 @@
                     android:layout_height="48dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:alpha="0.3"
                     android:src="@drawable/ic_chat"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -119,7 +131,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:background="#EE0040D0"
+                android:background="#0074c2"
                 android:shadowColor="@android:color/black"
                 android:text="내 위치"
                 android:textColor="@android:color/white"
@@ -155,7 +167,7 @@
                 android:id="@+id/my_stat_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:background="#333333"
+                android:background="#111111"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -166,6 +178,7 @@
                     android:layout_height="44dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:alpha="0.3"
                     android:src="@drawable/ic_team"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -189,7 +202,7 @@
                 android:layout_height="0dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
-                android:background="#333333"
+                android:background="#111111"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/my_stat_btn"
                 app:layout_constraintStart_toStartOf="parent"
@@ -201,6 +214,7 @@
                     android:layout_height="44dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:alpha="0.3"
                     android:src="@drawable/ic_situation"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/situation"
@@ -267,7 +281,7 @@
                     android:id="@+id/chat_filter_hq_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="→ 상황실"
+                    android:text="상황실에"
                     android:textColor="@android:color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -279,7 +293,7 @@
                 android:id="@+id/chat_filter_all"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#888888"
+                android:background="#0074c2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/chat_filter_team"
                 app:layout_constraintStart_toEndOf="@+id/chat_filter_hq"
@@ -289,7 +303,7 @@
                     android:id="@+id/chat_filter_all_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="→ 전체"
+                    android:text="전체에게"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -301,7 +315,7 @@
                 android:id="@+id/chat_filter_team"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#888888"
+                android:background="#0074c2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/chat_filter_all"
@@ -311,7 +325,7 @@
                     android:id="@+id/chat_filter_team_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="→ 조"
+                    android:text="조에게"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -349,10 +363,8 @@
                 android:id="@+id/chat_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
+                android:background="#eeeeee"
                 android:text="보내기"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -365,6 +377,7 @@
         android:id="@+id/menu_popup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="44dp"
         android:background="#DD000000"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -393,48 +406,16 @@
                 android:orientation="horizontal">
 
                 <android.support.constraint.ConstraintLayout
-                    android:id="@+id/menu_sit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:clickable="true">
-
-                    <ImageView
-                        android:id="@+id/btn_img_sit"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="8dp"
-                        android:src="@drawable/btn_img_sit"
-                        app:layout_constraintBottom_toTopOf="@+id/btn_txt_sit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/btn_txt_sit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="지도 보기"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_img_sit" />
-
-                </android.support.constraint.ConstraintLayout>
-
-                <android.support.constraint.ConstraintLayout
                     android:id="@+id/menu_rep"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#f5f5f4"
                     android:clickable="true">
 
                     <ImageView
                         android:id="@+id/btn_img_rep"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/btn_img_rep"
                         app:layout_constraintBottom_toTopOf="@+id/btn_txt_rep"
@@ -448,10 +429,44 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="출동 보고"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/btn_img_rep" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/menu_strp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#f5f5f5"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/btn_img_strp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/btn_img_strp"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_txt_strp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/btn_txt_strp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="구조물 보고"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_img_strp" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -464,8 +479,8 @@
 
                     <ImageView
                         android:id="@+id/btn_img_cht"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/btn_img_cht"
                         app:layout_constraintBottom_toTopOf="@+id/btn_txt_cht"
@@ -479,6 +494,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="채팅"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -503,8 +519,8 @@
 
                     <ImageView
                         android:id="@+id/btn_img_mem"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/btn_img_mem"
                         app:layout_constraintBottom_toTopOf="@+id/btn_txt_mem"
@@ -518,6 +534,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="조편성 보기"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -534,8 +551,8 @@
 
                     <ImageView
                         android:id="@+id/btn_img_str"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/btn_img_str"
                         app:layout_constraintBottom_toTopOf="@+id/btn_txt_str"
@@ -549,6 +566,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="담당 구조물"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -566,8 +584,8 @@
 
                     <ImageView
                         android:id="@+id/btn_img_lgt"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/btn_img_lgt"
                         app:layout_constraintBottom_toTopOf="@+id/btn_txt_lgt"
@@ -581,6 +599,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="로그아웃"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -595,11 +614,15 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/report_popup"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:background="#cc000000"
-        android:visibility="gone"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        android:background="#ee0074c2"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -636,7 +659,6 @@
             android:id="@+id/report_et_cl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/report_button_cl"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/report_title_cl">
@@ -645,110 +667,64 @@
                 android:id="@+id/report_et"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@android:color/white"
                 android:ems="10"
                 android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/report_btn_ll"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/report_button_cl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/report_et_cl">
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/report_ok_cl"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:background="#55000000"
-                android:clickable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/report_reject_cl"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/report_ok_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="12dp"
-                    android:text="보고"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/report_reject_cl"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:background="#55000000"
-                android:clickable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/report_cancel_cl"
-                app:layout_constraintStart_toEndOf="@+id/report_ok_cl"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/report_reject_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="12dp"
-                    android:text="응소불가"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/report_cancel_cl"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="#55000000"
-                android:clickable="true"
+            <LinearLayout
+                android:id="@+id/report_btn_ll"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#55FFFFFF"
+                android:orientation="horizontal"
+                android:paddingTop="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/report_reject_cl"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/report_et">
 
-                <TextView
-                    android:id="@+id/report_cancel_tv"
+                <Button
+                    android:id="@+id/report_ok"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="#0074c2"
+                    android:text="보고"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/report_reject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="#0074c2"
+                    android:text="응소불가"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/report_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#0074c2"
                     android:text="취소"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
         </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

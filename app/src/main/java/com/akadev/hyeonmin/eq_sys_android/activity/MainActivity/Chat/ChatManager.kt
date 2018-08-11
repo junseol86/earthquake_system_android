@@ -108,12 +108,12 @@ class ChatManager(val activity: MainActivity) {
                 (chatFilterAry[i][1] as TextView).setTextColor(Color.parseColor("#000000"))
 
             } else {
-                chatFilterAry[i][0].setBackgroundColor(Color.parseColor("#888888"))
+                chatFilterAry[i][0].setBackgroundColor(Color.parseColor("#0074c2"))
                 (chatFilterAry[i][1] as TextView).setTextColor(Color.parseColor("#FFFFFF"))
             }
         }
         val teamNo = Singleton.memberInfo!!["mbr_team"]
-        (chatFilterAry[2][1] as TextView).text = "→ ${if (teamNo == "0") "미편성" else (teamNo + "조")}"
+        (chatFilterAry[2][1] as TextView).text = "${if (teamNo == "0") "미편성" else (teamNo + "조")}에게"
     }
 
     fun chatGetListBeforeResult(downList: List<Map<String, String>>, scrollToBottom: Boolean) {

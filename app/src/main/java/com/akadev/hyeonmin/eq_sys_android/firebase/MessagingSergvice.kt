@@ -8,8 +8,10 @@ import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
+import android.os.VibrationEffect
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.TaskStackBuilder
 import com.akadev.hyeonmin.eq_sys_android.R
@@ -18,7 +20,9 @@ import com.google.firebase.messaging.RemoteMessage
 import com.akadev.hyeonmin.eq_sys_android.activity.LoginActivity
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 
-class MessagingSergvice: FirebaseMessagingService(), MediaPlayer.OnPreparedListener {
+class MessagingSergvice: FirebaseMessagingService()
+//        , MediaPlayer.OnPreparedListener
+{
 
     override fun onMessageReceived(rm: RemoteMessage?) {
 
@@ -54,14 +58,13 @@ class MessagingSergvice: FirebaseMessagingService(), MediaPlayer.OnPreparedListe
 
             var channelId = "EqSystem"
             val nb = NotificationCompat.Builder(this, channelId)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setDefaults(Notification.DEFAULT_ALL)
                     .setBadgeIconType(R.mipmap.ic_launcher_2)
                     .setContentTitle(rm!!.data["title"])
                     .setContentText(rm.data["body"])
                     .setColor(Color.WHITE)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setAutoCancel(true)
-//                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 nb.setSmallIcon(R.mipmap.ic_launcher_round_2)
@@ -91,30 +94,48 @@ class MessagingSergvice: FirebaseMessagingService(), MediaPlayer.OnPreparedListe
             val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 nm.createNotificationChannel(
-                        NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_HIGH)
+                        NotificationChannel(channelId, "MyChannel", NotificationManager.IMPORTANCE_HIGH)
                 )
             }
+
+            nb.setVibrate(longArrayOf(1000, 2000, 3000, 4000))
+            nb.setSound(
+                    Uri.parse(
+                            "android.resource://${applicationContext.packageName}/raw/siren"
+                    )
+            )
+
             nm.notify(0, nb.build())
 
-
-//            소리 재생 - 위에 조절한 볼륨으로
-            val soundNotification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val player = MediaPlayer()
-
-            try {
-                player.setDataSource(applicationContext, soundNotification)
-            } catch (e: Exception) {
-
+            if (rm.data["type"] == "earthquake") {
+                val r = RingtoneManager.getRingtone(applicationContext, Uri.parse(
+                        "android.resource://${applicationContext.packageName}/raw/siren"
+                ))
+                r.play()
             }
 
-            player.prepareAsync()
-
+//            소리 재생 - 위에 조절한 볼륨으로
+//            val soundNotification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+//            val player = MediaPlayer()
+//
+//            try {
+//                player.setDataSource(applicationContext,
+//                        Uri.parse(
+//                                "android.resource://com.akadev.hyeonmin.eq_sys_android/raw/siren"
+//                        ))
+//
+//            } catch (e: Exception) {
+//
+//            }
+//
+//            player.prepareAsync()
+//
         }
 
     }
-
-    override fun onPrepared(mp: MediaPlayer?) {
-        mp?.start()
-    }
+//
+//    override fun onPrepared(mp: MediaPlayer?) {
+//        mp?.start()
+//    }
 
 }

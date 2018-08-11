@@ -51,7 +51,7 @@ class ChatAdapter(val chats: ArrayList<Map<String, String>>): RecyclerView.Adapt
         }
 
         if (chats[position]["cht_from_idx"] == Singleton.memberInfo!!["mbr_idx"]) {
-            holder.chatItemCl.setBackgroundColor(if (position % 2 == 0) Color.rgb(82, 137, 233) else Color.rgb(82, 124, 233))
+            holder.chatItemCl.setBackgroundColor(if (position % 2 == 0) Color.rgb(27, 45, 77) else Color.rgb(27, 41, 77))
             holder.chatText.gravity = Gravity.RIGHT
             holder.chatHdrLeft.text = sent
             val to = when (chats[position]["cht_to"]) {
@@ -73,7 +73,7 @@ class ChatAdapter(val chats: ArrayList<Map<String, String>>): RecyclerView.Adapt
             holder.chatText.gravity = Gravity.LEFT
             holder.chatHdrLeft.text = "$from → $to"
 
-            holder.chatItemCl.setBackgroundColor(if (position % 2 == 0) Color.rgb(42, 42, 42) else Color.rgb(34, 34, 34))
+            holder.chatItemCl.setBackgroundColor(if (position % 2 == 0) Color.rgb(42, 42, 42) else Color.rgb(38, 38, 38))
             holder.chatHdrRight.text = sent
         }
         holder.chatText.text = chats[position]["cht_text"]

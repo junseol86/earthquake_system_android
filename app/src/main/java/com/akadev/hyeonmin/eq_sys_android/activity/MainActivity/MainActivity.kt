@@ -137,16 +137,20 @@ class MainActivity : NMapActivity() {
         mbr.sortWith(Comparator { o1, o2 -> (o1!!["mbr_team"]!!.compareTo(o2!!["mbr_team"]!!)) })
         var list1 = ArrayList<Map<String, String>>()
         var list2 = ArrayList<Map<String, String>>()
+        var list3 = ArrayList<Map<String, String>>()
         mbr.map {
             if (it["mbr_team"]!! == Singleton.memberInfo!!["mbr_team"]) {
                 list1.add(it)
-            } else {
+            } else if (it["mbr_team"]!! != "0") {
                 list2.add(it)
+            } else {
+                list3.add(it)
             }
         }
         members = ArrayList()
         members?.addAll(list1)
         members?.addAll(list2)
+        members?.addAll(list3)
         nm?.showMemberPosition()
 
         Handler().postDelayed( {

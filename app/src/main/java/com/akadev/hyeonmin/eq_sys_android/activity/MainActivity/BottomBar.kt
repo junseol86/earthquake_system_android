@@ -30,7 +30,7 @@ class BottomBar(val atvt: MainActivity) {
                     strOnTeam.add(it)
                 }
             }
-            if (strOnTeam.size == 0) {
+            if (myTeam == "0" || strOnTeam.size == 0) {
                 AlertDialog.Builder(atvt)
                         .setMessage("할당된 구조물이 없습니다.")
                         .show()
