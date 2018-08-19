@@ -107,7 +107,7 @@ class MessagingSergvice: FirebaseMessagingService()
 
             nm.notify(0, nb.build())
 
-            if (rm.data["type"] == "earthquake") {
+            if (rm.data["type"] == "earthquake" || rm.data["type"] == "structure") {
                 val r = RingtoneManager.getRingtone(applicationContext, Uri.parse(
                         "android.resource://${applicationContext.packageName}/raw/siren"
                 ))

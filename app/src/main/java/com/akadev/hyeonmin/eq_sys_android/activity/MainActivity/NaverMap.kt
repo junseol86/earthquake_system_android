@@ -30,6 +30,9 @@ class NaverMap(val atvt: MainActivity) {
     var strPoiData = NMapPOIdata(1000, resourceProvider)
     var strPoiDataOverlay: NMapPOIdataOverlay? = null
 
+    var strReqPoiData = NMapPOIdata(1000, resourceProvider)
+    var strReqPoiDataOverlay: NMapPOIdataOverlay? = null
+
     var sptPoiData = NMapPOIdata(1000, resourceProvider)
     var sptPoiDataOverlay: NMapPOIdataOverlay? = null
 
@@ -42,6 +45,8 @@ class NaverMap(val atvt: MainActivity) {
     var eqCircleData: NMapCircleData? = null
     var eqCircleStyle = NMapCircleStyle(atvt)
     var eqCircleDataOverlay: NMapPathDataOverlay? = null
+    var eqPoiData = NMapPOIdata(10, resourceProvider)
+    var eqPoiDataOverlay: NMapPOIdataOverlay? = null
 
     init {
         mapView.setClientId(Const.clientId)
@@ -128,6 +133,7 @@ class NaverMap(val atvt: MainActivity) {
         }
     }
 
+//    일반 구조물들
     fun showStructures () {
         strPoiData.beginPOIdata(0)
         strPoiData.removeAllPOIdata()
@@ -145,10 +151,11 @@ class NaverMap(val atvt: MainActivity) {
                 8 -> PoiFlag.TM_8
                 else -> PoiFlag.TM_0
             }
-            strPoiData.addPOIitem(pos, markerString, marker, "")
+            strPoiData.addPOIitem(pos, markerString, marker, it)
         }
         strPoiData.endPOIdata()
         setStrPoiDataOverlay()
+        showStructuresRequested()
     }
 
     fun setStrPoiDataOverlay() {
@@ -156,6 +163,43 @@ class NaverMap(val atvt: MainActivity) {
             overlayManager.removeOverlay(strPoiDataOverlay)
         }
         strPoiDataOverlay = overlayManager.createPOIdataOverlay(strPoiData, null)
+        strPoiDataOverlay?.onStateChangeListener = object : NMapPOIdataOverlay.OnStateChangeListener {
+            override fun onFocusChanged(p0: NMapPOIdataOverlay?, p1: NMapPOIitem?) {
+            }
+            override fun onCalloutClick(p0: NMapPOIdataOverlay?, p1: NMapPOIitem?) {
+                atvt.sr?.onClickStrBalloon(p1!!)
+            }
+        }
+    }
+
+//    점검 요망 구조물들
+    fun showStructuresRequested () {
+        strReqPoiData.beginPOIdata(0)
+        strReqPoiData.removeAllPOIdata()
+        atvt.structures?.map {
+            if (it["str_need_check"]!!.toInt() == 1) {
+                val pos = NGeoPoint(it["longitude"]!!.toDouble(), it["latitude"]!!.toDouble())
+                val markerString = it["str_name"].toString()
+                val marker = PoiFlag.REQ
+                strReqPoiData.addPOIitem(pos, markerString, marker, it)
+            }
+        }
+        strReqPoiData.endPOIdata()
+        setStrReqPoiDataOverlay()
+    }
+
+    fun setStrReqPoiDataOverlay() {
+        if (strReqPoiDataOverlay != null) {
+            overlayManager.removeOverlay(strReqPoiDataOverlay)
+        }
+        strReqPoiDataOverlay = overlayManager.createPOIdataOverlay(strReqPoiData, null)
+        strReqPoiDataOverlay?.onStateChangeListener = object : NMapPOIdataOverlay.OnStateChangeListener {
+            override fun onFocusChanged(p0: NMapPOIdataOverlay?, p1: NMapPOIitem?) {
+            }
+            override fun onCalloutClick(p0: NMapPOIdataOverlay?, p1: NMapPOIitem?) {
+                atvt.sr?.onClickStrBalloon(p1!!)
+            }
+        }
     }
 
     fun showSpots () {
@@ -176,7 +220,7 @@ class NaverMap(val atvt: MainActivity) {
         sptPoiData.endPOIdata()
         setSptPoiDataOverlay()
     }
-    fun setSptPoiDataOverlay() {
+    fun setSptPoiDataOverlay () {
         if (sptPoiDataOverlay != null) {
             overlayManager.removeOverlay(sptPoiDataOverlay)
         }
@@ -208,6 +252,35 @@ class NaverMap(val atvt: MainActivity) {
         eqCircleDataOverlay = overlayManager.createPathDataOverlay()
         eqCircleDataOverlay?.addCircleData(eqCircleData)
         eqCircleDataOverlay?.showAllPathData(4)
+        showEq()
+    }
+
+    fun showEq () {
+        eqPoiData.beginPOIdata(0)
+        eqPoiData.removeAllPOIdata()
+        if (Singleton.earthquakeInfo != null) {
+            val eqInf = Singleton.earthquakeInfo!!
+            val pos = NGeoPoint(eqInf["longitude"]!!.toDouble(), eqInf["latitude"]!!.toDouble())
+            var marker = when (eqInf["eq_level"]!!.toInt()) {
+                0 -> PoiFlag.EQ_25
+                1 -> PoiFlag.EQ_50
+                else -> PoiFlag.EQ_100
+            }
+            var markerString = when (eqInf["eq_level"]!!.toInt()) {
+                0 -> "자체대응"
+                1 -> "대응 1단계"
+                else -> "대응 2단계"
+            }
+            eqPoiData.addPOIitem(pos, markerString, marker, "")
+        }
+        eqPoiData.endPOIdata()
+        showEqPoiDataOverlay()
+    }
+    fun showEqPoiDataOverlay () {
+        if (eqPoiDataOverlay != null) {
+            overlayManager.removeOverlay(eqPoiDataOverlay)
+        }
+        eqPoiDataOverlay = overlayManager.createPOIdataOverlay(eqPoiData, null)
     }
 
 }

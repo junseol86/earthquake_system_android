@@ -18,6 +18,12 @@ object PoiFlag {
     var TM_7 = base + 207
     var TM_8 = base + 208
 
+    var EQ_25 = base + 250
+    var EQ_50 = base + 251
+    var EQ_100 = base + 252
+
+    var REQ = base + 260
+
     var MEMBER = base + 301
     var MEMBER_POS = base + 302
     var MEMBER_REJECT = base + 303

@@ -9,7 +9,7 @@ class MenuPopup(val atvt: MainActivity) {
 
     val menuPuCl = atvt.findViewById(R.id.menu_popup) as ConstraintLayout
     val menuPuBtn = atvt.findViewById(R.id.menu_pu_btn) as ImageView
-    val menuSit = atvt.findViewById(R.id.menu_strp) as ConstraintLayout
+    val menuStrp = atvt.findViewById(R.id.menu_strp) as ConstraintLayout
     val menuRep = atvt.findViewById(R.id.menu_rep) as ConstraintLayout
     val menuCht = atvt.findViewById(R.id.menu_cht) as ConstraintLayout
     val menuMem = atvt.findViewById(R.id.menu_mem) as ConstraintLayout
@@ -25,7 +25,8 @@ class MenuPopup(val atvt: MainActivity) {
             menuPuCl.visibility = View.VISIBLE
         }
 
-        menuSit.setOnClickListener {
+        menuStrp.setOnClickListener {
+            atvt.tb?.showStructuresDialog()
             menuPuCl.visibility = View.GONE
         }
 
@@ -40,7 +41,7 @@ class MenuPopup(val atvt: MainActivity) {
         }
 
         menuMem.setOnClickListener {
-            atvt.tb?.showMembers()
+            atvt.tb?.showMembersDialog()
             menuPuCl.visibility = View.GONE
         }
 

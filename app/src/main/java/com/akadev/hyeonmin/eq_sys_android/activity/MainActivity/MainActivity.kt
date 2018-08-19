@@ -34,6 +34,7 @@ class MainActivity : NMapActivity() {
     var nm: NaverMap? = null
     var ml: MyLocation? = null
     var mp: MenuPopup? = null
+    var sr: StructureReport? = null
 
     var fcmTokenVly: FcmToken? = null
     var chatMng: ChatManager? = null
@@ -63,6 +64,9 @@ class MainActivity : NMapActivity() {
         tb?.setTeamAndName()
         bb = BottomBar(this)
         ml = MyLocation(this)
+        mp = MenuPopup(this)
+        sr = StructureReport(this)
+
         requestPermissions()
 
         earthquakeVly = Earthquake(this)
@@ -81,7 +85,6 @@ class MainActivity : NMapActivity() {
         registerReceiver(BrCstReceiver(), intFtr)
 
         nm = NaverMap(this)
-        mp = MenuPopup(this)
     }
 
     fun requestPermissions () {
@@ -117,6 +120,20 @@ class MainActivity : NMapActivity() {
     fun structureGetListResult(str: ArrayList<Map<String, String>>) {
         structures = str
         Collections.reverse(structures)
+        var list1 = ArrayList<Map<String, String>>()
+        var list2 = ArrayList<Map<String, String>>()
+        var list3 = ArrayList<Map<String, String>>()
+        structures!!.map {
+            when {
+                it["str_need_check"]!! == "1" -> list1.add(it)
+                it["str_rpt_prior"]!! == "1" -> list2.add(it)
+                else -> list3.add(it)
+            }
+        }
+        structures?.removeAll(structures!!)
+        structures?.addAll(list1)
+        structures?.addAll(list2)
+        structures?.addAll(list3)
         nm?.showStructures()
     }
 

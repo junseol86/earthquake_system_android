@@ -29,6 +29,8 @@ class BrCstReceiver: BroadcastReceiver() {
                     .setMessage(body.toString())
                     .show()
             ma.rt?.setReportPopup(true)
+        } else if (type == "structure") {
+            ma.structureGetList()
         }
     }
 }

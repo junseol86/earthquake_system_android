@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.akadev.hyeonmin.eq_sys_android.R
 import com.akadev.hyeonmin.eq_sys_android.activity.LoginActivity
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
+import com.nhn.android.maps.maplib.NGeoPoint
 
 class TopBar(var atvt: MainActivity) {
 
@@ -26,10 +27,10 @@ class TopBar(var atvt: MainActivity) {
         myStatBtn.setOnClickListener {
             AlertDialog.Builder(atvt)
                     .setTitle("메뉴")
-                    .setItems(arrayOf("도착 소요시간 또는 응소불가 전송", "직원들 목록/전화", "로그아웃")) { _, i ->
+                    .setItems(arrayOf("도착 소요시간 또는 응소불가 전송", "구조물 보고", "직원들 목록/전화", "로그아웃")) { _, i ->
                         when (i) {
                             0 -> atvt.rt?.setReportPopup(true)
-                            1 -> showMembers()
+                            1 -> showMembersDialog()
                             2 -> logout()
                         }
                     }
@@ -73,13 +74,31 @@ class TopBar(var atvt: MainActivity) {
         situation.text = sitStr
     }
 
-    fun setTeamAndName() {
+    fun setTeamAndName () {
         val team = Singleton.memberInfo!!["mbr_team"]
         val teamStr = if (team == "0") "미배정 - " else "${team}조 - "
         teamAndName.text = teamStr + Singleton.memberInfo!!["mbr_name"]
     }
 
-    fun showMembers() {
+    fun showStructuresDialog () {
+        if (atvt.structures != null) {
+            val strAry = Array(atvt.structures!!.size) {
+                (if (atvt.structures!![it]["str_need_check"] as String == "1") "[점검요] " else "") + (atvt.structures!![it]["str_name"] as String)
+            }
+            AlertDialog.Builder(atvt)
+                    .setTitle("구조물 목록")
+                    .setItems(strAry) { _, i ->
+                        atvt.nm?.mapController?.zoomLevel = 14
+                        atvt.nm?.mapController?.mapCenter =
+                                NGeoPoint(atvt.structures!![i]["longitude"]!!.toDouble(), atvt.structures!![i]["latitude"]!!.toDouble())
+                        atvt.sr?.showStrRptPopup(atvt.structures!![i])
+                    }
+                    .show()
+        }
+
+    }
+
+    fun showMembersDialog () {
         if (atvt.members != null) {
             val mbrAry = Array(atvt.members!!.size) {
                 "[" + (if (atvt.members!![it]["mbr_team"] as String == "0") "미편성] " else  (atvt.members!![it]["mbr_team"] as String+ "조] ")) + (atvt.members!![it]["mbr_name"] as String)
