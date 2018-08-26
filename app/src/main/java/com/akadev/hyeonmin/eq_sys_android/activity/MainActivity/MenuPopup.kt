@@ -1,5 +1,7 @@
 package com.akadev.hyeonmin.eq_sys_android.activity.MainActivity
 
+import android.content.Intent
+import android.net.Uri
 import android.support.constraint.ConstraintLayout
 import android.view.View
 import android.widget.ImageView
@@ -14,7 +16,7 @@ class MenuPopup(val atvt: MainActivity) {
     val menuCht = atvt.findViewById(R.id.menu_cht) as ConstraintLayout
     val menuMem = atvt.findViewById(R.id.menu_mem) as ConstraintLayout
     val menuStr = atvt.findViewById(R.id.menu_str) as ConstraintLayout
-    val menuLgt = atvt.findViewById(R.id.menu_lgt) as ConstraintLayout
+    val menuCheck = atvt.findViewById(R.id.menu_check) as ConstraintLayout
 
     init {
         menuPuCl.setOnClickListener {
@@ -50,8 +52,11 @@ class MenuPopup(val atvt: MainActivity) {
             menuPuCl.visibility = View.GONE
         }
 
-        menuLgt.setOnClickListener {
-            atvt.tb?.logout()
+        menuCheck.setOnClickListener {
+            val url = "http://35.229.252.63:8081/guide.html"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            atvt.startActivity(intent)
             menuPuCl.visibility = View.GONE
         }
     }

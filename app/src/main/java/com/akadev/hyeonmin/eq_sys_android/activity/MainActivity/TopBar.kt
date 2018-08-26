@@ -27,11 +27,9 @@ class TopBar(var atvt: MainActivity) {
         myStatBtn.setOnClickListener {
             AlertDialog.Builder(atvt)
                     .setTitle("메뉴")
-                    .setItems(arrayOf("도착 소요시간 또는 응소불가 전송", "구조물 보고", "직원들 목록/전화", "로그아웃")) { _, i ->
+                    .setItems(arrayOf("로그아웃", "취소")) { _, i ->
                         when (i) {
-                            0 -> atvt.rt?.setReportPopup(true)
-                            1 -> showMembersDialog()
-                            2 -> logout()
+                            0 -> logout()
                         }
                     }
                     .show()

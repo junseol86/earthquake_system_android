@@ -45,14 +45,17 @@ class MessagingSergvice: FirebaseMessagingService()
                 manager.adjustStreamVolume(AudioManager.STREAM_SYSTEM, AudioManager.ADJUST_UNMUTE, 0)
                 manager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, 0)
                 manager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_UNMUTE, 0)
+                manager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
             } else {
                 manager.setStreamMute(AudioManager.STREAM_SYSTEM, false)
                 manager.setStreamMute(AudioManager.STREAM_RING, false)
                 manager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false)
+                manager.setStreamMute(AudioManager.STREAM_MUSIC, false)
             }
             manager.setStreamVolume(AudioManager.STREAM_SYSTEM, manager.getStreamMaxVolume(AudioManager.STREAM_SYSTEM), 0)
             manager.setStreamVolume(AudioManager.STREAM_RING, manager.getStreamMaxVolume(AudioManager.STREAM_RING), 0)
             manager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, manager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION), 0)
+            manager.setStreamVolume(AudioManager.STREAM_MUSIC, manager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0)
 
 //            팝업 띄우기
 
@@ -107,7 +110,7 @@ class MessagingSergvice: FirebaseMessagingService()
 
             nm.notify(0, nb.build())
 
-            if (rm.data["type"] == "earthquake" || rm.data["type"] == "structure") {
+            if (rm.data["type"] == "earthquake" || rm.data["type"] == "structure" || rm.data["type"] == "smsparse") {
                 val r = RingtoneManager.getRingtone(applicationContext, Uri.parse(
                         "android.resource://${applicationContext.packageName}/raw/siren"
                 ))

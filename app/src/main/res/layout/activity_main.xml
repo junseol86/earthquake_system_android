@@ -575,7 +575,7 @@
                 </android.support.constraint.ConstraintLayout>
 
                 <android.support.constraint.ConstraintLayout
-                    android:id="@+id/menu_lgt"
+                    android:id="@+id/menu_check"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -583,27 +583,27 @@
                     android:clickable="true">
 
                     <ImageView
-                        android:id="@+id/btn_img_lgt"
+                        android:id="@+id/btn_img_check"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_marginTop="8dp"
-                        android:src="@drawable/btn_img_lgt"
-                        app:layout_constraintBottom_toTopOf="@+id/btn_txt_lgt"
+                        android:src="@drawable/btn_img_check"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_txt_check"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/btn_txt_lgt"
+                        android:id="@+id/btn_txt_check"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="로그아웃"
+                        android:text="점검확인사항"
                         android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_img_lgt" />
+                        app:layout_constraintTop_toBottomOf="@+id/btn_img_check" />
 
                 </android.support.constraint.ConstraintLayout>
 

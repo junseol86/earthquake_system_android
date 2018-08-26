@@ -18,6 +18,7 @@ import com.akadev.hyeonmin.eq_sys_android.activity.MainActivity.Chat.ChatManager
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ACFuncs
 import com.akadev.hyeonmin.eq_sys_android.activity.extension.ActivityCommon
 import com.akadev.hyeonmin.eq_sys_android.firebase.BrCstReceiver
+import com.akadev.hyeonmin.eq_sys_android.firebase.SmsReceiver
 import com.akadev.hyeonmin.eq_sys_android.util.Singleton
 import com.akadev.hyeonmin.eq_sys_android.volley.*
 import com.google.firebase.iid.FirebaseInstanceId
@@ -90,10 +91,15 @@ class MainActivity : NMapActivity() {
     fun requestPermissions () {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SYSTEM_ALERT_WINDOW,
                     android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.CALL_PHONE), 0)
+                    android.Manifest.permission.CALL_PHONE,
+                    android.Manifest.permission.READ_SMS,
+                    android.Manifest.permission.RECEIVE_SMS), 0)
         }
 
 //        M 버전 이상일 시 알림소리 강제변경할 때 꼭 필요
